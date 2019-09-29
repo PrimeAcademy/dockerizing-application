@@ -1,0 +1,52 @@
+/* ------------------------------------------------------------
+Site - ensures that the footer is fixed to the bottom of the
+web page
+------------------------------------------------------------ */
+#root {
+    height: 100%;
+}
+
+.site {
+	display: flex;
+	height: 100%; /* needed for IE10 */
+	min-height: 100%;
+	flex-direction: column;
+}
+
+.site-hd {
+	flex: 0 0 auto;
+}
+
+.site-bd {
+	flex: 1 0 auto;
+}
+
+/* ------------------------------------------------------------
+Page Container
+------------------------------------------------------------ */
+
+.pgContainer {
+    max-width: 1000px;
+    padding: 20px;
+    margin: auto;
+    box-sizing: border-box;
+}
+
+/* ------------------------------------------------------------
+Page Title
+------------------------------------------------------------ */
+
+.pageTitle {
+    padding: 0 0 10px;
+    position: relative;
+}
+
+.pageTitle:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 70%;
+    height: 1px;
+    background-color: darkgrey;
+}
