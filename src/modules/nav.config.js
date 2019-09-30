@@ -11,19 +11,19 @@ const navConfig = [
         mainNav: true,
     },
     {
+        name: 'Containers',
+        path: '/containers',
+        exact: false,
+        comp: ContainersPage,
+        mainNav: true,
+    },
+    {
         name: 'About',
         path: '/about',
         exact: false,
         comp: AboutPage,
         mainNav: true,
     },
-    {
-        name: 'Containers',
-        path: '/containers',
-        exact: false,
-        comp: ContainersPage,
-        mainNav: true,
-    }
 ];
 
 export default navConfig;
