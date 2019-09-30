@@ -81,26 +81,6 @@ Vertical Rhythm
 Docker Panel
 ------------------------------------------------------------ */
 
-.dockerShell {
-    padding: 10px 10px 15px;
-    margin: 0;
-    box-sizing: border-box;
-    border: 2px solid #6c8ea3;
-    border-radius: 6px;
-    background: #ffffff none;
-    color: #6c8ea3;
-    text-align: left;
-}
-
-.dockerShell-label {
-    display: inline-block;
-    padding: 5px;
-    margin: 0 0 10px;
-    border-radius: 0 0 3px 3px;
-    font-size: 1.2rem;
-    font-weight: bold;
-}
-
 .dockerPanel {
     padding: 10px 10px 15px;
     margin: 0;
@@ -123,14 +103,38 @@ Docker Panel
     border-radius: 3px;
 }
 
-.dockerPanel + .dockerPanel {
-    margin-top: 6px;
-}
-
 .dockerPanel > * + * {
     margin-top: 6px;
 }
 
 .dockerPanel-label {
     font-size: 1.4rem;
+}
+
+/* ------------------------------------------------------------
+Docker Shell
+------------------------------------------------------------ */
+
+.dockerShell {
+    padding: 10px 10px 15px;
+    margin: 0;
+    box-sizing: border-box;
+    border: 2px solid #6c8ea3;
+    border-radius: 12px;
+    background: #ffffff none;
+    color: #6c8ea3;
+    text-align: left;
+}
+
+.dockerShell-label {
+    display: inline-block;
+    padding: 5px;
+    margin: 0;
+    border-radius: 0 0 3px 3px;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.dockerShell > * + * {
+    margin-top: 8px;
 }
