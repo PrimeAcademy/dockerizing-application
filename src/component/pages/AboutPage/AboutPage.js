@@ -38,7 +38,7 @@ class AboutPage extends Component {
                         </div>
 
                         <div className="vr vr_x4">
-                            <p><i>This information was provided by the <a href="https://www.docker.com/">Docker.com</a> site. To learn more about docker take a look at the docker website.</i></p>
+                            <p><i>This information was provided by the <a href="https://www.docker.com/" target="_blank" rel="noopener noreferrer">Docker.com</a> site. To learn more about docker take a look at the docker website.</i></p>
                             <Button variant="contained" color="primary" onClick={this.onNavToDocker}>Checkout Docker</Button>
                         </div>
                     </Grid>
@@ -49,17 +49,17 @@ class AboutPage extends Component {
                         <div className="vr vr_x2">
                             <h3 className="vr vr_x2">Docker Containers Are Everywhere: Linux, Windows, Data center, Cloud, Serverless, etc.</h3>
 
-                            <p>Docker container technology was launched in 2013 as an open source <a href="https://www.docker.com/products/docker-enterprise" target="_blank">Docker Engine</a>.</p>
+                            <p>Docker container technology was launched in 2013 as an open source <a href="https://www.docker.com/products/docker-enterprise" target="_blank" rel="noopener noreferrer">Docker Engine</a>.</p>
 
                             <p>It leveraged existing computing concepts around containers and specifically in the Linux world, primitives known as cgroups and namespaces. Docker's technology is unique because it focuses on the requirements of developers and systems operators to separate application dependencies from infrastructure.</p>
 
-                            <p>Success in the Linux world drove a partnership with Microsoft that brought Docker containers and its functionality to Windows Server (sometimes referred to as <a href="https://www.docker.com/products/windows-containers" target="_blank">Docker Windows containers</a>).</p>
+                            <p>Success in the Linux world drove a partnership with Microsoft that brought Docker containers and its functionality to Windows Server (sometimes referred to as <a href="https://www.docker.com/products/windows-containers" target="_blank" rel="noopener noreferrer">Docker Windows containers</a>).</p>
 
                             <p>Technology available from Docker and its open source project, Moby has been leveraged by all major data center vendors and cloud providers. Many of these providers are leveraging Docker for their container-native IaaS offerings. Additionally, the leading open source serverless frameworks utilize Docker container technology.</p>
                         </div>
 
                         <div className="vr vr_x2">
-                            <p><i>This information was provided by the <a href="https://www.docker.com/">Docker.com</a> site. To learn more about docker take a look at the docker website.</i></p>
+                            <p><i>This information was provided by the <a href="https://www.docker.com/" target="_blank" rel="noopener noreferrer">Docker.com</a> site. To learn more about docker take a look at the docker website.</i></p>
                             <Button variant="contained" color="primary" onClick={this.onNavToDocker}>Checkout Docker</Button>
                         </div>
                     </Grid>
