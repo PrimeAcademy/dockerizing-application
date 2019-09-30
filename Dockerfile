@@ -1,21 +1,19 @@
 # Base image we are modifying from https://hub.docker.com/
 FROM node:12-alpine
 
-# add `/app/node_modules/.bin` to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
-
 # set working directory
-RUN mkdir -p /app/client
-WORKDIR /app/client
+RUN mkdir -p /app
+WORKDIR /app
 
 # install and cache app dependencies
-COPY package.json /app/client/package.json
+COPY package.json /app/package.json
 RUN npm install
 
-COPY . /app/client
+COPY . /app
 
 # Exposing a specific PORT for viewing the application
 EXPOSE 3000
+EXPOSE 35729
 
 # Run final command to kick off client build
 CMD ["npm", "start"]
