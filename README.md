@@ -28,22 +28,22 @@ Docker containers whether [Windows](https://www.docker.com/products/windows-cont
 
     ```
     # set working directory
-    RUN mkdir -p /app/client
-    WORKDIR /app/client
+    RUN mkdir -p /app
+    WORKDIR /app
     ```
 
 1. Copy over the existing `package.json` to the new working directory and install the application dependencies using `npm install`.
 
     ```
     # install and cache app dependencies
-    COPY package.json /app/client/package.json
+    COPY package.json /app/package.json
     RUN npm install
     ```
 
 1. After dependency installation copy over all assets to the working directory.
 
     ```
-    COPY . /app/client
+    COPY . /app
     ```
 
 1. Ensure that the default `create-react-app` port is exposed to the network created by Docker.
@@ -79,6 +79,22 @@ Docker containers whether [Windows](https://www.docker.com/products/windows-cont
 1. The [docker run command](https://docs.docker.com/engine/reference/commandline/run/) creates a new container instance, from the image we just created, and runs it.
 1. `-p 3001:3000` exposes port 3000 to other Docker containers on the same network (for inter-container communication) and port 3001 to the host.
 1. Additionally the `-d` option can be used in order to run the container in detach mode.
+
+**Warm Reloading with `create-react-app`:**
+
+Our application was built using `create-react-app` which does support web page reloading. 
+
+To make this work, we need to do two things:
+1. Mount the current working directory into the Docker container
+    - `-v $(pwd):/app`, will be added to our `docker run` command
+2. Expose the WebSocket port
+    - The WebSocket thing is set up by exposing port 35729 to the host (`-p 35729:35729`).
+    - Add `EXPOSE 35729` to our `Dockerfile` just below the other exposed port.
+    - `-p 35729:35729`, will then also be added to our `docker run` command
+
+When we run our container the command should now be:
+
+`docker run -p 3001:3000 -p 35729:35729 -v $(pwd):/app [CONTAINER_NAME]`
 
 
 ### Docker Command Cheat Sheet
