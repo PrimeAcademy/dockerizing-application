@@ -37,8 +37,8 @@ class Header extends Component {
             <header className="appTopper">
                 <div className="appTopper-identity">
                     <div className="logo">
-                        <svg className="logo-img" viewBox="0 0 512 512">
-                            <use xlinkHref="/images/responsive-icon.svg#responsive"></use>
+                        <svg className="logo-img" viewBox="0 0 720 600">
+                            <use xlinkHref="/images/docker-logo.svg#dockerLogo"></use>
                         </svg>
                         <h1 className="logo-text">Docker at Work</h1>
                     </div>

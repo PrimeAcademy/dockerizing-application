@@ -37,7 +37,9 @@ Page Title
 ------------------------------------------------------------ */
 
 .pageTitle {
+    width: 100%;
     padding: 0 0 10px;
+    margin: 0 0 40px;
     position: relative;
 }
 
@@ -46,7 +48,89 @@ Page Title
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 70%;
+    width: 100%;
     height: 1px;
     background-color: darkgrey;
+}
+
+/* ------------------------------------------------------------
+Vertical Rhythm
+------------------------------------------------------------ */
+
+.vr {
+    margin-bottom: 10px;
+}
+
+.vr_x2 {
+    margin-bottom: 20px;
+}
+
+.vr_x3 {
+    margin-bottom: 30px;
+}
+
+.vr_x4 {
+    margin-bottom: 40px;
+}
+
+.vr_x5 {
+    margin-bottom: 50px;
+}
+
+/* ------------------------------------------------------------
+Docker Panel
+------------------------------------------------------------ */
+
+.dockerShell {
+    padding: 10px 10px 15px;
+    margin: 0;
+    box-sizing: border-box;
+    border: 2px solid #6c8ea3;
+    border-radius: 6px;
+    background: #ffffff none;
+    color: #6c8ea3;
+    text-align: left;
+}
+
+.dockerShell-label {
+    display: inline-block;
+    padding: 5px;
+    margin: 0 0 10px;
+    border-radius: 0 0 3px 3px;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.dockerPanel {
+    padding: 10px 10px 15px;
+    margin: 0;
+    box-sizing: border-box;
+    border-radius: 6px;
+    background: #254356 none;
+    color: #ffffff;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.dockerPanel_outlined {
+    background-color: #ffffff;
+    border: 2px solid #254356;
+    color: #254356;
+}
+
+.dockerPanel .dockerPanel {
+    background-color: #506877;
+    border-radius: 3px;
+}
+
+.dockerPanel + .dockerPanel {
+    margin-top: 6px;
+}
+
+.dockerPanel > * + * {
+    margin-top: 6px;
+}
+
+.dockerPanel-label {
+    font-size: 1.4rem;
 }
