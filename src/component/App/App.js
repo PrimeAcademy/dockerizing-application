@@ -17,10 +17,10 @@ class App extends Component {
     render() {
         const pageRoutes = navConfig.map((navData, index) => {
             if (navData.exact) {
-                return <Route exact path={navData.path} component={navData.comp} />;
+                return <Route exact path={navData.path} component={navData.comp} key={index} />;
             }
 
-            return <Route path={navData.path} component={navData.comp} />;
+            return <Route path={navData.path} component={navData.comp} key={index} />;
         });
 
         return (
