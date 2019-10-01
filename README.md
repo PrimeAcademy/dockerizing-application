@@ -78,7 +78,9 @@ We're gonna start by looking at how we setup a single **Docker Container**. This
 
 #### Dockerfile Commands
 
-**Build and tag the Docker image:**
+That's great we have a configuration for **Docker** but how do we actually use it. Because we downloaded the **Docker** desktop application we now have access to the command line tools which we'll be leveraging to build our **Docker Image** and then run the **Docker Container**.
+
+**Build and Tag the Docker Image:**
 
 `docker build --tag=[CONTAINER_NAME] .`
 
@@ -87,7 +89,7 @@ We're gonna start by looking at how we setup a single **Docker Container**. This
     - `[CONTAINER_NAME]` - is a placeholder and can be whatever you want to use in order to identify the Docker image
 1. ` .` - is a required argument showing the location of the Dockerfile to be used for the Docker configuration
 
-**Spin up the Docker container after the build is done:**
+**Running the Docker Container:**
 
 `docker run -p 3001:3000 [CONTAINER_NAME]`
 
