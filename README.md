@@ -1,6 +1,6 @@
 # Dockerizing an Application
 
-The following is a brief description of Docker Containers and what they have to offer from the [getting started page](https://www.docker.com/get-started) of the [docker site](https://www.docker.com).
+The following is a brief description of Docker Containers and what they have to offer based on the [getting started page](https://www.docker.com/get-started) of the [docker site](https://www.docker.com).
 
 Building and deploying applications can be made faster with containers. Docker containers wrap up software and its dependencies into a standardized unit for software development that includes everything needed to run: code, runtime, system tools, and libraries. This guarantees that the application will always run the same and makes collaboration much simpler (see [docker's get started page](https://www.docker.com/get-started)). The containers help to ensure that all environments have the exact same setups.
 
@@ -22,3 +22,12 @@ Docker containers whether [Windows](https://www.docker.com/products/windows-cont
 - node.js
 - express
 - postgresql
+
+
+## Lesson Stages
+
+- Single Docker Container
+- Adding Docker Compose
+- Running Multiple Containers
+- Server Container
+- Database Container
