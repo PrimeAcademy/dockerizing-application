@@ -5,8 +5,9 @@ const COLOR_CODES = {
 };
 
 /**
- * Referenced CSS-Tricks for color conversions
+ * Referenced CSS-Tricks for color conversions & random color generation
  * https://css-tricks.com/converting-color-spaces-in-javascript/
+ * https://css-tricks.com/examples/RandomHexColor/
  */
 class Color {
     constructor() {
