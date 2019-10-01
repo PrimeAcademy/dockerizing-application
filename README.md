@@ -13,7 +13,22 @@ Docker containers whether [Windows](https://www.docker.com/products/windows-cont
 
 [Try Docker containers](https://www.docker.com/get-started) with free, hosted lab tutorials or download and take a tutorial to start building apps.
 
-## Dockerfile, Docker with Single Container
+
+## Lesson Stages
+
+- Single Docker Container
+- Adding Docker Compose
+- Running Multiple Containers
+- Server Container
+- Database Container
+
+
+## Single Docker Container
+
+We're gonna start by looking at how we setup a single **Docker Container**. This single **Container** will be used to launch and run a React application built using `create-react-app` as the base setup.
+
+
+### Dockerfile, Docker with Single Container
 
 1. In order to setup a single docker container for your development environment you need to create a file named `Dockerfile` in the root of your project directory.
 
@@ -61,7 +76,7 @@ Docker containers whether [Windows](https://www.docker.com/products/windows-cont
     ```
 
 
-### Dockerfile Commands
+#### Dockerfile Commands
 
 **Build and tag the Docker image:**
 
@@ -97,7 +112,7 @@ When we run our container the command should now be:
 `docker run -p 3001:3000 -p 35729:35729 -v $(pwd):/app [CONTAINER_NAME]`
 
 
-### Docker Command Cheat Sheet
+#### Docker Command Cheat Sheet
 
 ```
 ## List Docker CLI commands
@@ -143,12 +158,3 @@ docker container rm [ID]
 - node.js
 - express
 - postgresql
-
-
-## Lesson Stages
-
-- Single Docker Container
-- Adding Docker Compose
-- Running Multiple Containers
-- Server Container
-- Database Container
