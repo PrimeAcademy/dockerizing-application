@@ -16,11 +16,11 @@ Docker containers whether [Windows](https://www.docker.com/products/windows-cont
 
 ## Lesson Stages
 
-- Single Docker Container
-- Adding Docker Compose
-- Running Multiple Containers
-- Server Container
-- Database Container
+- [Single Docker Container](/#Single-Docker-Container)
+- [Adding Docker Compose](/#Adding-Docker-Compose)
+- [Running Multiple Containers](/#Running-Multiple-Containers)
+    - [Database Container](/#Database-Container)
+    - [Server Container](/#Server-Container)
 
 
 ## Single Docker Container
@@ -104,7 +104,7 @@ Our application was built using `create-react-app` which does support web page r
 To make this work, we need to do two things:
 1. Mount the current working directory into the Docker container
     - `-v $(pwd):/app`, will be added to our `docker run` command
-2. Expose the WebSocket port
+1. Expose the WebSocket port
     - The WebSocket thing is set up by exposing port 35729 to the host (`-p 35729:35729`).
     - Add `EXPOSE 35729` to our `Dockerfile` just below the other exposed port.
     - `-p 35729:35729`, will then also be added to our `docker run` command
