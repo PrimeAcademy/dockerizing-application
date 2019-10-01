@@ -13,42 +13,29 @@ class Color {
     constructor() {
         this.colorCode = COLOR_CODES.HEX;
 
-        this.init();
+        this._init();
     }
 
-    init() {
+    //
+    // PRIVATE METHODS
+    // --------------------------------------------------------------------------------
+
+    _init() {
         this.pickNewColor(this.colorCode);
     }
 
-    convertTo(convertCode) {
-        if (COLOR_CODES[convertCode] == null) {
-            return false;
-        }
-
-        this.setCurrColor(this.currColor, convertCode);
-
-        return true;
-    }
-
-    generateColorHexCode() {
+    _generateColorHexCode() {
         const randomColorCode = Math.floor(Math.random()*16777215).toString(16);
         return `#${randomColorCode}`;
     }
 
-    pickNewColor(useColorCode) {
-        const newColor = this.generateColorHexCode();
-
-        this.currColorHex = newColor;
-        this.setCurrColor(newColor, useColorCode);
-    }
-
-    setCurrColor(newHexColor, newColorCode) {
+    _setCurrColor(newHexColor, newColorCode) {
         let newCurrColor = newHexColor;
 
         if (newColorCode !== COLOR_CODES.HEX
             && COLOR_CODES[newColorCode] != null
         ) {
-            const converterMethod = `convert${COLOR_CODES.HEX}To${newColorCode}`;
+            const converterMethod = `_convert${COLOR_CODES.HEX}To${newColorCode}`;
             newCurrColor = this[converterMethod](newHexColor);
         }
 
@@ -61,7 +48,7 @@ class Color {
         return true;
     }
 
-    convertHEXToRGB(hexStr) {
+    _convertHEXToRGB(hexStr) {
         let r = 0;
         let g = 0;
         let b = 0;
@@ -82,7 +69,7 @@ class Color {
         return `rgb(${+r}, ${+g}, ${+b})`;
     }
 
-    convertHEXToHSL(hexStr) {
+    _convertHEXToHSL(hexStr) {
         // Convert hex to RGB first
         let r = 0;
         let g = 0;
@@ -134,6 +121,27 @@ class Color {
         l = +(l * 100).toFixed(1);
 
         return `hsl(${h}, ${s}%, ${l}%)`;
+    }
+
+    //
+    // PUBLIC METHODS
+    // --------------------------------------------------------------------------------
+
+    convertTo(convertCode) {
+        if (COLOR_CODES[convertCode] == null) {
+            return false;
+        }
+
+        this._setCurrColor(this.currColor, convertCode);
+
+        return true;
+    }
+
+    pickNewColor(useColorCode) {
+        const newColor = this._generateColorHexCode();
+
+        this.currColorHex = newColor;
+        this._setCurrColor(newColor, useColorCode);
     }
 
     get color() {
