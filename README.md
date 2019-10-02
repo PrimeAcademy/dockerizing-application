@@ -193,6 +193,20 @@ We had to add a lot of additional settings to the **Docker** commands but we can
     - List images used by the created containers.
 
 
+### Running Multiple Containers
+
+The biggest benefit to using the `docker-compose.yml` is that we can now run multiple containers from the one **Docker Image** allowing us to spin up an entire full stack application. Where as before we had to run `create db`, several SQL queries, `npm instal`, `npm run server`, & `npm run client` in order to spin up our application and develop locally with **Docker Compose** we just run `docker-compose up` and it's all taken care of.
+
+
+#### Database Container
+
+1. create a `database` directory in the root of the project folder
+1. create a `database.sql` file inside of the `database` directory that 
+
+
+#### Server Container
+
+
 #### Docker Command Cheat Sheet
 
 ```
