@@ -17,8 +17,10 @@
     "redux-saga": "^1.1.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "node server/server.js",
     "build": "react-scripts build",
+    "client": "react-scripts start",
+    "server": "nodemon --watch server server/server.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -36,5 +38,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.3"
   }
 }
