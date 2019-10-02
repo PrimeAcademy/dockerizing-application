@@ -16,7 +16,10 @@ Docker containers whether [Windows](https://www.docker.com/products/windows-cont
 
 ## Introducing the Issue
 
-We have a simple Client Side / Front-End Application that we want to maintain across different teammates and different environments. Typically we would be asking our team to run `npm install` to download dependencies and then running `npm start` to kick off the live loading server for local development. Seems pretty straight forward at first glance but...
+We have a simple Client Side / Front-End Application that we want to maintain across different teammates and different environments. Typically we would be asking our team to run:
+    - `npm install`
+    - `npm start`
+After that we would expect that they should be able to run and develop for the application locally. Seems pretty straight forward at first glance but...
 
 1. What if someone on the team is on Windows and not Mac?
 1. What if someone on the team has an older version of Node.js loaded that isn't compatible with our application?
@@ -134,6 +137,41 @@ To make this work, we need to do two things:
 When we run our container the command should now be:
 
 `docker run -p 3001:3000 -p 35729:35729 -v $(pwd):/app [CONTAINER_NAME]`
+
+
+## Adding Docker Compose
+
+We had to add a lot of additional settings to the **Docker** commands but we can repurpose them as configuration settings in a new **Docker** yaml configuration file. This configuration file can hold many of these custom settings along with eventually letting us run and configure many different **Docker Containers**.
+
+1. Create a new file called `docker-compose.yml` at the root of the project.
+1. The configuration settings in the `docker-compose.yml` file are as follows:
+
+    ```yml
+    version: '3'
+
+    services:
+        ##
+        ## CONTAINER for Client Side Application
+        ## to test service run:
+        ##     docker-compose up --build -d client
+        ## ----------------------------------------
+        client:
+            build: 
+                context: ./
+            environment:
+                - REACT_APP_PORT=3000
+                # - CHOKIDAR_USEPOLLING=true # supposed to help with watch events in VM https://create-react-app.dev/docs/advanced-configuration
+            ports:
+                - 3001:3000 # expose ports - HOST:CONTAINER
+                - 35729:35729
+            volumes:
+                - '.:/app'
+                - '/app/node_modules'
+            command: npm run client
+    ```
+
+1. Breaking down the configuration
+
 
 
 #### Docker Command Cheat Sheet
