@@ -14,6 +14,28 @@ Docker containers whether [Windows](https://www.docker.com/products/windows-cont
 [Try Docker containers](https://www.docker.com/get-started) with free, hosted lab tutorials or download and take a tutorial to start building apps.
 
 
+## Introducing the Issue
+
+We have a simple Client Side / Front-End Application that we want to maintain across different teammates and different environments. Typically we would be asking our team to run `npm install` to download dependencies and then running `npm start` to kick off the live loading server for local development. Seems pretty straight forward at first glance but...
+
+1. What if someone on the team is on Windows and not Mac?
+1. What if someone on the team has an older version of Node.js loaded that isn't compatible with our application?
+1. What if someone on the team doesn't even have Node.js installed?
+
+Luckily **Docker** can help us to solve these issue by handling environment setup, dependency loading, and launching of our application all in one place. Best of all regardless of who is using it the environment will run consistently for any team member working on the project.
+
+
+## Installing Docker
+
+1. Navigate to the [Docker Get Started](https://www.docker.com/get-started) page.
+1. Click on the **Download Desktop and Take a Tutorial** button on the right side of the page.
+1. Create an account with Docker Hub.
+    - The Docker ID is the username that docker will use to identify you.
+    - Complete Profile...
+    - Confirmation email...
+1. Downloading the Docker desktop application in the BG.
+
+
 ## Lesson Stages
 
 - [Single Docker Container](/#Single-Docker-Container)
