@@ -201,10 +201,87 @@ The biggest benefit to using the `docker-compose.yml` is that we can now run mul
 #### Database Container
 
 1. create a `database` directory in the root of the project folder
-1. create a `database.sql` file inside of the `database` directory that 
+1. create an `init.sql` file inside of the `database` directory
+    - this file will contain all of our queries for our database tables
+1. create a `data.sql` file inside of the `database` directory
+    - this file will be used to seed some initial data into our tables for local development
+
+Before we used these types of files to make it easier for other people setup the local environment for our application but now we can use it to actually setup and run our database. Now let's configure **Docker Compose** with a new container to handle our database.
+
+1. add a new container to the `docker-compose.yml` file for the database:
+
+    ```yml
+    services:
+        ## ... client container settings
+
+        ##
+        ## CONTAINER for Postgres database
+        ## database access URL:
+        ##     postgres://POSTGRES_USER:POSTGRES_PASSWORD@localhost:HOST_PORT/POSTGRES_DB
+        ## to test service run:
+        ##     docker-compose up --build -d database
+        ## ----------------------------------------
+        database:
+            image: postgres:latest
+            restart: always
+            ports:
+                - 54320:5432
+            environment:
+                POSTGRES_USER: dockerpguser
+                POSTGRES_PASSWORD: linkAwake342
+                POSTGRES_DB: employee_portal
+                POSTGRES_HOST: localhost
+            volumes:
+                - ./database/init.sql:/docker-entrypoint-initdb.d/10-init.sql
+                - ./database/data.sql:/docker-entrypoint-initdb.d/20-data.sql
+    ```
+
+1. Let's breakdown what these settings are doing
+    - `database` - defines the name for the new container
+    - `image` - inside of the `Dockerfile` we used for the `client` container we defined a base image using `FROM` this is the `docker-compose.yml` equivalent of that so in this case our base image is `postgres:latest`
+    - `restart` - we are telling to always restart the database when inactive
+    - `ports` - we are exposing the Docker container postgres port that is be default `5432` to our **HOST** machine on port `54320` so as not to conflict with any other postgres database we may have running (`HOST:CONTAINER`)
+    - `environment` - just like you have seen us set up environment variables on a `.env` file locally we can set some environment configuration variables for the **Docker Container**, the majority of the environment configurations are things that our base image leverages in order to spin up postgres
+        - `POSTGRES_USER` - this is the database username used to access the database
+        - `POSTGRES_PASSWORD` - this is the password associated with the provided username
+        - `POSTGRES_DB` - this is the name of the postgres database
+        - `POSTGRES_HOST` - this is the base host location `localhost` where Postico will access the database
+    - `volumes` - we have seen this use in out `client` container but the way in which we are using it here is very different because it's actually running our SQL files for us in order to setup our tables/schema and seed some data inside of there
+        - `[PATH_TO_SQL]:/docker-entrypoint-initdb.d/[SQL_FILE_NAME].sql` - in the first part you should put the path to the `.sql` file in your codebase relative to the `docker-compose.yml` file and in the second part you are going to use a very specific naming structure to rename the file that you are pointing to in your project directory where you start with a number `10-` and then use the same name as your origin file for the second part `init.spl`
+            - The numbers being used are the key here because that helps us to run the SQL files in a specific order
+
+Now that we have our configurations setup let's go ahead and build out our new environment with both the client and database running. We'll want to make sure to first remove any previous **Docker Images** we may have had running and then spin up our new **Docker Containers**.
+
+1. run: `docker-compose images`
+1. may see some images that have been created listed out in the console
+
+    ```
+           Container                Repository         Tag       Image Id      Size 
+    --------------------------------------------------------------------------------
+    dockerize-app_client_1     dockerize-app_client   latest   ca3551b22fa3   407 MB
+    ```
+
+1. run: `docker-compose stop`
+    - ensures that all the images have stopped 
+1. run: `docker-compose rm`
+    - removes all of the stopped images and you can verify by running `docker-compose images` again
+1. run: `docker-compose up`
+    - this will load and build all of our images and then run our containers
+1. Make sure that our `client` environment is still working by navigating to **http://localhost:3001** in your browser.
+1. Now we can take a look at the database using **Postico** because we have exposed those ports.
+1. Open **Postico** and make sure you are looking at your favorites window.
+1. Click **Edit** on one of your favorites or add a **New Favorite**
+1. **Nickname** - call it "Docker"
+1. **Host** - use "localhost" (same value we used for `POSTGRES_HOST`)
+1. **User** - use "dockerpguser" (same value used for `POSTGRES_USER`)
+1. **Password** - use "linkAwake342" (same the value used for `POSTGRES_PASSWORD`)
+1. **Database** - use "employee_portal" (same the value used for `POSTGRES_DB`)
+1. Click **Connect** and then Postico will open up a view of the database and you'll se that not only did it create our **"employees"** table for us but it also populated some initial data for us as well based on the queries in our SQL files
 
 
 #### Server Container
+
+Now that we have the `client` environment and `database` setup and working in our `docker-compose.yml` let's take a look at setting up the server.
 
 
 #### Docker Command Cheat Sheet
