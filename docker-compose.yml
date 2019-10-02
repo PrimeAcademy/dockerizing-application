@@ -9,13 +9,10 @@ services:
   client:
     build: 
       context: ./
-    # environment:
-      # - REACT_APP_PORT=${REACT_APP_PORT}
-      # - CHOKIDAR_USEPOLLING=true # supposed to help with watch events in VM https://create-react-app.dev/docs/advanced-configuration
     ports:
-      - 3001:3000 # expose ports - HOST:CONTAINER
-      - 35729:35729
+      - 3001:3000 # expose ports - HOST:CONTAINER (for create-react-app)
+      - 35729:35729 # expose ports - HOST:CONTAINER (for serviceworker warm reloading)
     volumes:
       - '.:/app'
       - '/app/node_modules'
-    command: npm run client
+    command: npm start
