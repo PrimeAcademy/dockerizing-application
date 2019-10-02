@@ -4,6 +4,9 @@ const bodyParser = require('body-parser');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// SOURCING IN ROUTES
+const fruitsRouter = require('./routes/fruits.router');
+
 //
 // CONFIGURING MIDDLEWARE
 // ------------------------------------------------------------
@@ -13,6 +16,7 @@ app.use(bodyParser.json());
 //
 // API ROUTES
 // ------------------------------------------------------------
+app.use('/api/fruits', fruitsRouter);
 
 //
 // REGISTERING THE STATICS TO BE SERVED UP FROM SERVER
