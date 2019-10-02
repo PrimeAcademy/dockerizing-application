@@ -158,20 +158,39 @@ We had to add a lot of additional settings to the **Docker** commands but we can
         client:
             build: 
                 context: ./
-            environment:
-                - REACT_APP_PORT=3000
-                # - CHOKIDAR_USEPOLLING=true # supposed to help with watch events in VM https://create-react-app.dev/docs/advanced-configuration
             ports:
-                - 3001:3000 # expose ports - HOST:CONTAINER
-                - 35729:35729
+                - 3001:3000 # expose ports - HOST:CONTAINER (for create-react-app)
+                - 35729:35729 # expose ports - HOST:CONTAINER (for serviceworker warm reloading)
             volumes:
                 - '.:/app'
                 - '/app/node_modules'
-            command: npm run client
+            command: npm start
     ```
 
-1. Breaking down the configuration
+**Let's breakdown what the Yaml configuration settings are.**
 
+1. `version` - sets the version of the Docker Compose Yaml file we are working with
+1. `services` - the names written as children of this define the different containers that we want to create like our `client` container
+1. For the individual `client` container:
+    - `build` - allows us to set custom build settings for this particular container
+        - `context` - sets the build context and if `dockerfile` is not set to a specific file it will look for a `Dockerfile` existing in the root of the directory defined in the context
+    - `ports` - here we define the various ports that we want exposed from our container to our host
+        - `HOST:CONTAINER` - the `HOST` port is the port that will be available on your computer @ `http://localhost:HOST` and `CONTAINER` represents that port that is being exposed inside the **Docker Container**
+        - this setting replaces the `-p 3001:3000 -p 35729:35729` options that were added to the `docker run` command we used previously
+    - `volumes` - mounts host paths or named volumes, specified as sub-options to a service.
+        - this setting replaces the `-v $(pwd):/app` option that were added to the `docker run` command we used previously
+    - `command` - this should be the run command needed to start the application and it will override the `CMD` set in the `Dockerfile`
+
+
+### Docker Compose Commands
+
+[Docker Compose Commands](https://docs.docker.com/compose/reference/)
+
+1. In order to standup our new setup run: `docker-compose up`
+    - Builds, (re)creates, starts, and attaches to containers for a service. Unless they are already running, this command also starts any linked services.
+    - Running `docker-compose up -d` starts the containers in the background and leaves them running.
+1. In order to view the containers run: `docker-compose images`
+    - List images used by the created containers.
 
 
 #### Docker Command Cheat Sheet
