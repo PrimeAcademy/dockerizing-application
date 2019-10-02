@@ -56,3 +56,5 @@ class FruitCart {
         return this._fruits;
     }
 }
+
+module.exports = FruitCart;
