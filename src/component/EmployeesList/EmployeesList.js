@@ -4,7 +4,9 @@ import mapStoreToProps from '../../redux/mapStoreToProps';
 
 class EmployeesList extends Component {
     componentDidMount() {
-
+        this.props.dispatch({
+            type: 'GET_EMPLOYEES',
+        });
     }
 
     render() {
