@@ -10,15 +10,24 @@ import {
 class FruitBasket extends Component {
     state = {
         selectedFruit: 0,
+        newCount: null,
     }
 
     onAddToBag = (event) => {
+        if (this.props.fruit.quantity === 0 || this.state.newCount === 0) {
+            return;
+        }
+
         this.props.dispatch({
             type: 'ADD_TO_BAG',
             payload: {
                 ...this.props.fruit,
-                index: this.props.fruitIdx,
+                fruitIdx: this.props.fruitIdx,
             }
+        });
+
+        this.setState({
+            newCount: this.state.newCount == null ? this.props.fruit.quantity - 1 : this.state.newCount - 1,
         });
     }
 
@@ -52,6 +61,7 @@ class FruitBasket extends Component {
             padding: '10px',
             backgroundColor: '#b0c4de',
         };
+        let currQuantity = this.props.fruit.quantity;
         let basketContent = (
             <div>
                 <Typography
@@ -71,6 +81,12 @@ class FruitBasket extends Component {
                 </Button>
             </div>
         );
+
+        if (this.state.newCount != null
+            && this.props.fruit.quantity > this.state.newCount
+        ) {
+            currQuantity = this.state.newCount;
+        }
 
         if (!this.props.empty) {
             basketContent = (

@@ -7,6 +7,7 @@ import {
     Typography,
     Paper,
 } from '@material-ui/core';
+import FruitBagItem from '../FruitBagItem/FruitBagItem';
 
 class FruitBag extends Component {
     componentDidMount() {
@@ -20,6 +21,14 @@ class FruitBag extends Component {
             padding: '10px',
             backgroundColor: '#f5deb3',
         };
+        const bagItemsDisplay = this.props.store.fruitBag.map((item, index) => {
+            return (
+                <Grid item key={index}>
+                    <FruitBagItem fruit={item} />
+                </Grid>
+            );
+        });
+
         return (
             <Grid container spacing={3} alignItems="center">
                 <Grid item xs={8}>
@@ -32,9 +41,9 @@ class FruitBag extends Component {
                             Fruit Bag
                         </Typography>
 
-                        <div>
-
-                        </div>
+                        <Grid container  spacing={2}>
+                            {bagItemsDisplay}
+                        </Grid>
                     </Paper>
                 </Grid>
                 <Grid item xs={4}>

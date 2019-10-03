@@ -17,7 +17,7 @@ class FruitStand extends Component {
     render() {
         const fruitsInStand = this.props.store.fruits.map((fruitItem, index) => {
             return (<Grid item xs={3} key={index}>
-                        <FruitBasket fruit={fruitItem} fruitIndex={index}></FruitBasket>
+                        <FruitBasket fruit={fruitItem} fruitIdx={index}></FruitBasket>
                     </Grid>);
         });
 
