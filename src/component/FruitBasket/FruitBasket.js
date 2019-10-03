@@ -103,7 +103,7 @@ class FruitBasket extends Component {
                             component="p"
                             align="center"
                         >
-                            {fruit.quantity}
+                            {currQuantity}
                         </Typography>
                     </div>
                     <div className="vr">
