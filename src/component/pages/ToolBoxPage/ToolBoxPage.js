@@ -4,6 +4,7 @@ import {
     Typography,
 } from '@material-ui/core';
 import ColorGenerator from '../../ColorGenerator/ColorGenerator';
+import FruitStand from '../../FruitStand/FruitStand';
 
 class ToolBoxPage extends Component {
     render() {
@@ -13,18 +14,35 @@ class ToolBoxPage extends Component {
                     <h2>The Tool Box</h2>
                 </div>
 
-                <Grid container spacing={3} justify="center">
-                    <Grid item xs={6}>
-                        <Typography gutterBottom variant="h4" component="h3">
-                            Color Generator
-                        </Typography>
+                <div className="vr vr_x3">
+                    <Grid container spacing={3} justify="center">
+                        <Grid item xs={6}>
+                            <Typography gutterBottom variant="h5" component="h3">
+                                Color Generator
+                            </Typography>
 
-                        <p>A simple randomized color generator that will convert the color to HEXIDECIMAL, RGB, or HSL formats.</p>
+                            <p>A simple randomized color generator that will convert the color to HEXIDECIMAL, RGB, or HSL formats.</p>
+                        </Grid>
+                        <Grid item xs={4}>
+                            <ColorGenerator />
+                        </Grid>
                     </Grid>
-                    <Grid item xs={4}>
-                        <ColorGenerator />
+                </div>
+
+                <div className="vr vr_x3">
+                    <Grid container spacing={3} justify="center">
+                        <Grid item xs={8}>
+                            <FruitStand />
+                        </Grid>
+                        <Grid item xs={4}>
+                            <Typography gutterBottom variant="h5" component="h3">
+                                Fruit Stand
+                            </Typography>
+
+                            <p>A generated fruit stand with a selection of fruit for a person to pick out their favorite fruits.</p>
+                        </Grid>
                     </Grid>
-                </Grid>
+                </div>
             </div>
         );
     }
