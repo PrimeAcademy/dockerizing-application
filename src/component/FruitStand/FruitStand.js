@@ -5,6 +5,7 @@ import {
     Grid,
 } from '@material-ui/core';
 import FruitBasket from '../FruitBasket/FruitBasket';
+import FruitBag from '../FruitBag/FruitBag';
 
 class FruitStand extends Component {
     componentDidMount() {
@@ -15,15 +16,27 @@ class FruitStand extends Component {
 
     render() {
         const fruitsInStand = this.props.store.fruits.map((fruitItem, index) => {
-            return <Grid item xs={4} key={index}>
-                <FruitBasket fruit={fruitItem} fruitIndex={index}></FruitBasket>
-            </Grid>
+            return (<Grid item xs={3} key={index}>
+                        <FruitBasket fruit={fruitItem} fruitIndex={index}></FruitBasket>
+                    </Grid>);
         });
 
+        if (fruitsInStand.length < 4) {
+            fruitsInStand.push(<Grid item xs={3} key={fruitsInStand.length - 1}>
+                <FruitBasket empty></FruitBasket>
+            </Grid>)
+        }
+
         return (
-            <Grid container spacing={3}>
-                {fruitsInStand}
-            </Grid>
+            <div>
+                <div className="vr">
+                    <Grid container spacing={3}>
+                        {fruitsInStand}
+                    </Grid>
+                </div>
+
+                <FruitBag />
+            </div>
         );
     }
 }
