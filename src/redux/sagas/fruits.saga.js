@@ -4,7 +4,7 @@ import axios from 'axios';
 // worker Saga: will be fired on "LOGIN" actions
 function* getFruits(action) {
   try {
-    const fruitsResponse = yield axios.post('/api/fruits');
+    const fruitsResponse = yield axios.get('/api/fruits');
     yield put({
         type: 'SET_FRUITS',
         payload: fruitsResponse.data,
