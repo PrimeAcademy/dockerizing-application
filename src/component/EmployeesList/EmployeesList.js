@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import mapStoreToProps from '../../redux/mapStoreToProps';
+import {
+    Table,
+    TableHead,
+    TableRow,
+    TableCell,
+    TableBody,
+} from '@material-ui/core';
+import EmployeeItem from '../EmployeeItem/EmployeeItem';
 
 class EmployeesList extends Component {
     componentDidMount() {
@@ -12,12 +20,7 @@ class EmployeesList extends Component {
     render() {
         const showEmployees = this.props.store.employees.map((employee, index) => {
             return (
-                <li key={index}>
-                    Name: {employee.name}<br />
-                    Rating: {employee.rating}<br />
-                    Salary: {employee.annual_salary}<br />
-                    Employee Number: {employee.employee_number}<br />
-                </li>
+                <EmployeeItem employee={employee} key={index} />
             );
         });
 
@@ -30,9 +33,27 @@ class EmployeesList extends Component {
                 }
                 
                 {showEmployees.length > 0 &&
-                    <ul>
-                        {showEmployees}
-                    </ul>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>
+                                    Name
+                                </TableCell>
+                                <TableCell>
+                                    Employee Number
+                                </TableCell>
+                                <TableCell>
+                                    Rating
+                                </TableCell>
+                                <TableCell>
+                                    Salary
+                                </TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {showEmployees}
+                        </TableBody>
+                    </Table>
                 }
             </div>
         );

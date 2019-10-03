@@ -52,7 +52,7 @@ class ToolBoxPage extends Component {
                                 Employees
                             </Typography>
 
-                            <p>Showing a list of employee information that is being stored in a persistent database</p>
+                            <p>Showing a list of employee information that is being stored in a persistent database.</p>
                         </Grid>
                         <Grid item xs={9}>
                             <EmployeesList />
