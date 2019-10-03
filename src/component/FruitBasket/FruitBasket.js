@@ -61,7 +61,7 @@ class FruitBasket extends Component {
             padding: '10px',
             backgroundColor: '#b0c4de',
         };
-        let currQuantity = this.props.fruit.quantity;
+        let currQuantity = this.props.fruit != null ? this.props.fruit.quantity : 0;
         let basketContent = (
             <div>
                 <Typography
