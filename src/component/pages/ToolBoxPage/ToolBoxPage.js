@@ -31,10 +31,10 @@ class ToolBoxPage extends Component {
 
                 <div className="vr vr_x3">
                     <Grid container spacing={3} justify="center">
-                        <Grid item xs={8}>
+                        <Grid item xs={9}>
                             <FruitStand />
                         </Grid>
-                        <Grid item xs={4}>
+                        <Grid item xs={3}>
                             <Typography gutterBottom variant="h5" component="h3">
                                 Fruit Stand
                             </Typography>
