@@ -8,7 +8,7 @@ services:
   ## ----------------------------------------
   client:
     build: 
-      context: ./
+      context: ./client
     ports:
       - 3001:3000 # expose ports - HOST:CONTAINER (for create-react-app)
       - 35729:35729 # expose ports - HOST:CONTAINER (for serviceworker warm reloading)
