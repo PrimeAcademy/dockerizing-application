@@ -16,7 +16,6 @@ services:
       - '.:/app/client'
       - '/app/client/node_modules'
     depends_on:
-      - database
       - server
     command: npm start
   ##
