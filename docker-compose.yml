@@ -45,8 +45,7 @@ services:
   ## ----------------------------------------
   server:
     build: 
-      context: ./
-      dockerfile: ./server/Dockerfile
+      context: ./server
     ports:
       - 5000:5000 # expose ports - HOST:CONTAINER
     environment:
