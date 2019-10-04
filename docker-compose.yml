@@ -10,7 +10,7 @@ services:
     build: 
       context: ./client
     ports:
-      - 3001:3000 # expose ports - HOST:CONTAINER (for create-react-app)
+      - 3000:3000 # expose ports - HOST:CONTAINER (for create-react-app)
       - 35729:35729 # expose ports - HOST:CONTAINER (for serviceworker warm reloading)
     volumes:
       - './client:/app/client'
@@ -49,11 +49,11 @@ services:
     ports:
       - 5000:5000 # expose ports - HOST:CONTAINER
     environment:
-      PORT_DB: 54320
+      PORT_DB: 5432
       POSTGRES_USER: dockerpguser
       POSTGRES_PASSWORD: linkAwake342
       POSTGRES_DB: employee_portal
-      POSTGRES_HOST: localhost
+      POSTGRES_HOST: database
     volumes:
       - './server:/app/server'
       - '/app/server/node_modules'
