@@ -10,8 +10,8 @@
     "pg": "^7.12.1"
   },
   "scripts": {
-    "start": "node server/server.js",
-    "server": "nodemon --watch server server/server.js"
+    "start": "node server.js",
+    "server": "nodemon --watch server server.js"
   },
   "devDependencies": {
     "nodemon": "^1.19.3"

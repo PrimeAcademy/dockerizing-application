@@ -13,7 +13,7 @@ services:
       - 3001:3000 # expose ports - HOST:CONTAINER (for create-react-app)
       - 35729:35729 # expose ports - HOST:CONTAINER (for serviceworker warm reloading)
     volumes:
-      - '.:/app/client'
+      - './client:/app/client'
       - '/app/client/node_modules'
     depends_on:
       - server
@@ -55,7 +55,7 @@ services:
       POSTGRES_DB: employee_portal
       POSTGRES_HOST: localhost
     volumes:
-      - '.:/app/server'
+      - './server:/app/server'
       - '/app/server/node_modules'
     depends_on:
       - database
