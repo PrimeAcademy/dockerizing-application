@@ -2,14 +2,14 @@
 FROM node:12-alpine
 
 # set working directory
-RUN mkdir -p /app
-WORKDIR /app
+RUN mkdir -p /app/client
+WORKDIR /app/client
 
 # install and cache app dependencies
-COPY package.json /app/package.json
+COPY package.json /app/client/package.json
 RUN npm install
 
-COPY . /app
+COPY . /app/client
 
 # Exposing a specific PORT for viewing the application
 EXPOSE 3000

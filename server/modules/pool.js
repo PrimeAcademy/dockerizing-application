@@ -21,7 +21,9 @@ if (process.env.DATABASE_URL) {
   };
 } else {
   config = {
-    host: 'localhost', // Server hosting the postgres database
+    host: process.env.POSTGRES_HOST ? process.env.POSTGRES_HOST : 'localhost', // Server hosting the postgres database
+    user: process.env.POSTGRES_USER ? process.env.POSTGRES_USER : 'postgres',
+    password: process.env.POSTGRES_PASSWORD ? process.env.POSTGRES_PASSWORD : 'postgres',
     port: process.env.PORT_DB ? process.env.PORT_DB : 5432, // env var: PGPORT
     database: process.env.POSTGRES_DB ? process.env.POSTGRES_DB : 'employee_portal', // env var: PGDATABASE
     max: 10, // max number of clients in the pool

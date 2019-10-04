@@ -13,8 +13,11 @@ services:
       - 3001:3000 # expose ports - HOST:CONTAINER (for create-react-app)
       - 35729:35729 # expose ports - HOST:CONTAINER (for serviceworker warm reloading)
     volumes:
-      - '.:/app'
-      - '/app/node_modules'
+      - '.:/app/client'
+      - '/app/client/node_modules'
+    depends_on:
+      - database
+      - server
     command: npm start
   ##
   ## CONTAINER for Postgres database
@@ -36,3 +39,26 @@ services:
     volumes:
       - ./database/init.sql:/docker-entrypoint-initdb.d/10-init.sql
       - ./database/data.sql:/docker-entrypoint-initdb.d/20-data.sql
+  ##
+  ## CONTAINER for Server Application
+  ## to test service run:
+  ##     docker-compose up --build -d server
+  ## ----------------------------------------
+  server:
+    build: 
+      context: ./
+      dockerfile: ./server/Dockerfile
+    ports:
+      - 5000:5000 # expose ports - HOST:CONTAINER
+    environment:
+      PORT_DB: 54320
+      POSTGRES_USER: dockerpguser
+      POSTGRES_PASSWORD: linkAwake342
+      POSTGRES_DB: employee_portal
+      POSTGRES_HOST: localhost
+    volumes:
+      - '.:/app/server'
+      - '/app/server/node_modules'
+    depends_on:
+      - database
+    command: npm run server
