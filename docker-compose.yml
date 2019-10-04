@@ -17,7 +17,7 @@ services:
       - '/app/client/node_modules'
     depends_on:
       - server
-    command: npm start
+    command: npm run client
   ##
   ## CONTAINER for Postgres database
   ## database access URL:

@@ -16,4 +16,4 @@ EXPOSE 3000
 EXPOSE 35729
 
 # Run final command to kick off client build
-CMD ["npm", "start"]
+CMD ["npm", "run", "client"]
