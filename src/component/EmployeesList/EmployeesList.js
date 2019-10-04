@@ -7,8 +7,10 @@ import {
     TableRow,
     TableCell,
     TableBody,
+    Paper,
 } from '@material-ui/core';
 import EmployeeItem from '../EmployeeItem/EmployeeItem';
+import EmployeeEntry from '../EmployeeEntry/EmployeeEntry';
 
 class EmployeesList extends Component {
     componentDidMount() {
@@ -26,35 +28,43 @@ class EmployeesList extends Component {
 
         return (
             <div>
-                {showEmployees.length === 0 &&
-                    <p>
-                        There are no employees currently loaded
-                    </p>
-                }
-                
-                {showEmployees.length > 0 &&
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>
-                                    Name
-                                </TableCell>
-                                <TableCell>
-                                    Employee Number
-                                </TableCell>
-                                <TableCell>
-                                    Rating
-                                </TableCell>
-                                <TableCell>
-                                    Salary
-                                </TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {showEmployees}
-                        </TableBody>
-                    </Table>
-                }
+                <div className="vr vr_x3">
+                    {showEmployees.length === 0 &&
+                        <p>
+                            There are no employees currently loaded
+                        </p>
+                    }
+                    
+                    {showEmployees.length > 0 &&
+                        <Paper>
+                            <Table>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>
+                                            Name
+                                        </TableCell>
+                                        <TableCell>
+                                            Employee Number
+                                        </TableCell>
+                                        <TableCell>
+                                            Rating
+                                        </TableCell>
+                                        <TableCell>
+                                            Salary
+                                        </TableCell>
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {showEmployees}
+                                </TableBody>
+                            </Table>
+                        </Paper>
+                    }
+                </div>
+
+                <div>
+                    <EmployeeEntry />
+                </div>
             </div>
         );
     }
