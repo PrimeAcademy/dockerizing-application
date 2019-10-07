@@ -14,6 +14,20 @@ Docker containers whether [Windows](https://www.docker.com/products/windows-cont
 [Try Docker containers](https://www.docker.com/get-started) with free, hosted lab tutorials or download and take a tutorial to start building apps.
 
 
+## Branching Strategy
+
+Every section of the lesson has a corresponding branch. The branches are listed in the notes for that particular section but as an overview I have listed out the branches below.
+
+* `master` - final `README.md` documentation for the lesson but does not have the full demo application
+* `develop` - has the final version of the application along with the docker setup
+* `feature-dockerfile` - [Single Docker Container](/#Single-Docker-Container) for the beginning of the lesson
+* `feature-docker-compose` - [Adding Docker Compose](/#Adding-Docker-Compose) in order to setup the idea of what Docker Compose is because it's needed in order to setup multiple containers
+* `feature-docker-compose-db` - [Database Container](/#Database-Container) setup within Docker Compose
+* `feature-docker-compose-server` - [Server Container](/#Server-Container) setup within Docker Compose
+* `feature-base-app` - base application with need of only one container for client-side
+* `feature-server-app` - full stack application with DB Schema, Server, and Client-Side
+
+
 ## Introducing the Issue
 
 We have a simple Client Side / Front-End Application that we want to maintain across different teammates and different environments. Typically we would be asking our team to run:
