@@ -38,6 +38,7 @@ After that we would expect that they should be able to run and develop for the a
 1. What if someone on the team is on Windows and not Mac?
 1. What if someone on the team has an older version of Node.js loaded that isn't compatible with our application?
 1. What if someone on the team doesn't even have Node.js installed?
+1. Now what happens if we start adding a Server API and Database Schema to be setup for our application? Our issues have just been compounded.
 
 Luckily **Docker** can help us to solve these issue by handling environment setup, dependency loading, and launching of our application all in one place. Best of all regardless of who is using it the environment will run consistently for any team member working on the project.
 
