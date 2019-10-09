@@ -43,24 +43,19 @@ After that we would expect that they should be able to run and develop for the a
 Luckily **Docker** can help us to solve these issue by handling environment setup, dependency loading, and launching of our application all in one place. Best of all regardless of who is using it the environment will run consistently for any team member working on the project.
 
 
-## Installing Docker
-
-1. Navigate to the [Docker Get Started](https://www.docker.com/get-started) page.
-1. Click on the **Download Desktop and Take a Tutorial** button on the right side of the page.
-1. Create an account with Docker Hub.
-    - The Docker ID is the username that docker will use to identify you.
-    - Complete Profile...
-    - Confirmation email...
-1. Downloading the Docker desktop application in the BG.
-
-
 ## Lesson Stages
 
+- [Installing Docker](/#Installing-Docker)
 - [Single Docker Container](/#Single-Docker-Container)
 - [Adding Docker Compose](/#Adding-Docker-Compose)
 - [Running Multiple Containers](/#Running-Multiple-Containers)
     - [Database Container](/#Database-Container)
     - [Server Container](/#Server-Container)
+
+
+## Installing Docker
+
+We navigate to Docker's [Get Started](https://www.docker.com/get-started) page in order to start downloading Docker. Please see the [DOCKER_INSTALLATION.md](/DOCKER_INSTALLATION.md) file for a step by step installation for Docker.
 
 
 ## Single Docker Container
