@@ -51,6 +51,7 @@ Luckily **Docker** can help us to solve these issue by handling environment setu
 - [Running Multiple Containers](/#Running-Multiple-Containers)
     - [Database Container](/#Database-Container)
     - [Server Container](/#Server-Container)
+    - [Client Container](/#Client-Container)
 
 
 ## Installing Docker
@@ -292,6 +293,249 @@ Now that we have our configurations setup let's go ahead and build out our new e
 #### Server Container
 
 Now that we have the `client` environment and `database` setup and working in our `docker-compose.yml` let's take a look at setting up the server.
+
+
+##### Creating Dockerfile for the Server
+
+1. Take a look at the `/server` directory. Inside there is a separate `package.json` file that will manage only the dependencies and run scripts for the server.
+1. In the `/server` directory create a `Dockerfile` with the following settings:
+
+    ```Dockerfile
+    # Base image we are modifying from https://hub.docker.com/
+    FROM node:12-alpine
+
+    # Creating App Directory
+    RUN mkdir -p /app/server
+    WORKDIR /app/server
+
+    COPY package.json /app/server
+
+    RUN npm install
+
+    COPY . /app/server
+
+    # Run final command to kick off server
+    CMD ["npm", "run", "server"]
+    ```
+
+1. This should look very familiar because it is nearly an identical setup to what we had for the client container's Dockerfile. The major differences is that the `WORKDIR` has a different path and that the `CMD` to run the server is different.
+1. add a new container to the `docker-compose.yml` file named **server**:
+
+    ```yml
+        ##
+        ## CONTAINER for Server Application
+        ## to test service run:
+        ##     docker-compose up --build -d server
+        ## ----------------------------------------
+        server:
+            build: 
+                context: ./server
+            ports:
+                - 5000:5000 # expose ports - HOST:CONTAINER
+            environment:
+                PORT_DB: 5432
+                POSTGRES_USER: dockerpguser
+                POSTGRES_PASSWORD: linkAwake342
+                POSTGRES_DB: employee_portal
+                POSTGRES_HOST: database
+            volumes:
+                - './server:/app/server'
+                - '/app/server/node_modules'
+            depends_on:
+                - database
+            command: npm run server
+    ```
+
+1. Let's breakdown what these settings are doing.
+    - `server:` - is defining the the HOST name for the server container
+    - `build:` - allows us to set custom build settings for this particular container
+        - `context:` - sets the build context and if `dockerfile` is not set to a specific file it will look for a `Dockerfile` existing in the root of the directory defined in the context
+    - `ports:` - here we define the ports that we want exposed from our container to our host machine
+        - `HOST:CONTAINER` - the `HOST` port is the port that will be available on your computer @ `http://localhost:HOST` and `CONTAINER` represents that port that is being exposed inside the **Docker Container**
+    - `environment:` - sets environment variables that will be accessible via `process.env` in our server code in order to establish the connection with the **database** container
+        - `PORT_DB: 5432` - setting the value for the database port to be used in the `pool` configuration
+        - `POSTGRES_USER: dockerpguser` - setting the value for the database user for login to be used in the `pool` configuration
+        - `POSTGRES_PASSWORD: linkAwake342` - setting the value for the database password for login to be used in the `pool` configuration
+        - `POSTGRES_DB: employee_portal` - setting the value for the database name to be used in the `pool` configuration
+        - `POSTGRES_HOST: database` - sets the value for the database host allowing interconnectivity between the **database** container and the **server** container which is the namespace we have given to our **database** container
+    - `volumes:` - mounts host paths or named volumes, specified as sub-options to a service.
+    - `depends_on:` - used to define any of the other **docker containers** that the **server** container depends on, identifying a connection for **docker-compose**
+    - `command` - the run command needed to kick off the server application and it will override the `CMD` set in `/server/Dockerfile`
+
+
+##### Setting up the Database Connection
+
+1. Our server normally establishes our database connection using `pg` which we configure in our `/server/modules/pool.js` file and we are going to need to make sure our pool is configured correctly
+1. Let's see what the updates to `pool.js` look like
+
+    ```JS
+    const pg = require('pg');
+    const url = require('url');
+
+    let config = {};
+
+    if (process.env.DATABASE_URL) {
+        // Heroku gives a url, not a connection object
+        // https://github.com/brianc/node-pg-pool
+        const params = url.parse(process.env.DATABASE_URL);
+        const auth = params.auth.split(':');
+
+        config = {
+            user: auth[0],
+            password: auth[1],
+            host: params.hostname,
+            port: params.port,
+            database: params.pathname.split('/')[1],
+            ssl: true, // heroku requires ssl to be true
+            max: 10, // max number of clients in the pool
+            idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
+        };
+    } else {
+        config = {
+            host: process.env.POSTGRES_HOST ? process.env.POSTGRES_HOST : 'localhost', // Server hosting the postgres database
+            user: process.env.POSTGRES_USER ? process.env.POSTGRES_USER : 'postgres',
+            password: process.env.POSTGRES_PASSWORD ? process.env.POSTGRES_PASSWORD : 'postgres',
+            port: process.env.PORT_DB ? process.env.PORT_DB : 5432, // env var: PGPORT
+            database: process.env.POSTGRES_DB ? process.env.POSTGRES_DB : 'prime_db', // env var: PGDATABASE
+            max: 10, // max number of clients in the pool
+            idleTimeoutMillis: 30000, // how long a client is allowed to remain idle before being closed
+        };
+    }
+
+    // this creates the pool that will be shared by all other modules
+    const pool = new pg.Pool(config);
+
+    // the pool with emit an error on behalf of any idle clients
+    // it contains if a backend error or network partition happens
+    pool.on('error', (err) => {
+        console.log('Unexpected error on idle client', err);
+        process.exit(-1);
+    });
+
+    module.exports = pool;
+    ```
+
+1. Everything looks fairly similar to our normal setup except for some additions to the config setup in the `} else {` where we are leveraging the environment variables that we configured in the `docker-compose.yml` file for the **server** container
+1. We have checks in place for to ensure that the environment variables are in place using ternary operators. The environment variables we're looking for are as follows:
+    - process.env.POSTGRES_HOST (for the **host** config setting)
+    - process.env.POSTGRES_USER (for the **user** config setting)
+    - process.env.POSTGRES_PASSWORD (for the **password** config setting)
+    - process.env.PORT_DB (for the **port** config setting)
+    - process.env.POSTGRES_DB (for the **database** config setting)
+1. Now our **server** container will be able to communicate with the **database** container as needed
+
+
+##### Testing Server Container
+
+1. run: `docker-compose stop`
+    - ensures that all the images have stopped 
+1. run: `docker-compose rm`
+    - removes all of the stopped images and you can verify by running `docker-compose images` again
+1. run: `docker-compose up --build`
+    - this will load and build all of our images and then run our containers, with the `--build` in place it forces **Docker** to run the build for the images again
+1. In **Postman** you should be able to test the Fruit Stand route by setting it to **GET** and then using the route `http://localhost:5000/api/fruits`
+    - should get a list back with four fruits to be put out on the fruit stand
+1. To test Employee data which will confirm that our **server** container is connecting to our **database** container we can test the **GET** rout of `http://localhost:5000/api/emplopyees` in **Postman**
+    - this endpoint reaches out to the database and returns a full list of the employees
+
+
+#### Client Container
+
+With the database and the server container hooked up we'll need to make some adjustments to the client-side code in order to get it's container to work with the database and server containers.
+
+1. Create a new `client` directory at the root of the project
+1. Move the following files/folders into the new client directory:
+    - `./Dockerfile`
+    - `./src`
+    - `./public`
+    - `package.json` (this file we'll copy and paste the copy into `./client`)
+1. Let's take a look at the changes we need to make to `./client/Dockerfile` first
+
+    ```
+    # Base image we are modifying from https://hub.docker.com/
+    FROM node:12-alpine
+
+    # set working directory
+    RUN mkdir -p /app/client
+    WORKDIR /app/client
+
+    # install and cache app dependencies
+    COPY package.json /app/client/package.json
+    RUN npm install
+
+    COPY . /app/client
+
+    # Exposing a specific PORT for viewing the application
+    EXPOSE 3000
+    EXPOSE 35729
+
+    # Run final command to kick off client build
+    CMD ["npm", "run", "client"]
+    ```
+
+    > Note: All of the `WORKDIR` paths that were previously referenced as `/app` are now `/app/client` to match the same format we are using for the **server** container
+
+1. Another change that was made was to update the `./package.json` proxy to have the correct host to connect with the server
+
+    ```JSON
+    {
+        "name": "dockerize-app-ui",
+        "version": "0.1.0",
+        "private": true,
+        "proxy": "http://server:5000",
+        "dependencies": {
+            "@material-ui/core": "^4.4.3",
+            "axios": "^0.19.0",
+            "react": "^16.10.1",
+            "react-dom": "^16.10.1",
+    ```
+
+    > Note: like the database host defined for the **server** container the host for our `proxy` is no longer `http://localhost:5000` but is now using the name of our `docker-compose.yml` **server** service as the host, `http://server:5000`
+
+1. Finally we are going to look at the adjustments needed for the `docker-compose.yml`
+
+    ```YAML
+        ##
+        ## CONTAINER for Client Side Application
+        ## to test service run:
+        ##     docker-compose up --build -d client
+        ## ----------------------------------------
+        client:
+            build: 
+                context: ./client
+            ports:
+                - 3000:3000 # expose ports - HOST:CONTAINER (for create-react-app)
+                - 35729:35729 # expose ports - HOST:CONTAINER (for serviceworker warm reloading)
+            volumes:
+                - './client:/app/client'
+                - '/app/client/node_modules'
+            depends_on:
+                - server
+            command: npm run client
+    ```
+
+    - `context:` - adjusted to reflect the new location of the `Dockerfile`
+    - `volumes:` - paths have been updated to match the new `WORKDIR` path
+    - `depends_on:` - telling docker that the `client` service depends on the `server` service
+
+1. With the final container in place we should be able to test the full stack application
+
+#### Testing Full Stack Application
+
+All of the commands listed after "run:" are assumed to be run from the command line in the project directory.
+
+1. run: `docker-compose up` 
+    - if you were running `docker-compose up` to test the different branches then you will want to make sure to remove the previous images by running the following in sequence
+        - `docker-compose stop`, makes sure that all docker images are stopped
+        - `docker-compose rm`, removes all stopped docker images
+        - `docker-compose up --build`, builds and runs docker images and containers (`--build` ensures that the build runs regardless of the state of the image)
+1. In the browser navigate to `http://localhost:3000` you should see the client application running
+1. If you go to `http://localhost:3000/#/tool-box` you should see the Fruit Stand and Employee section running fully.
+    - Fruit Stand is using the server without database connection
+    - Employee is using the server with database connection
+1. With Docker still running try changing a heading on the **Tool Box** page to make sure that the browser content is getting refreshed
+1. Now test to see if the server watch is working correctly by changing something in the `/api/fruits` API route and then refresh the **Tool Box** page in the browser
+1. From the command line you can press **control + C** keys to stop running docker witch should also stop the docker images
 
 
 #### Docker Command Cheat Sheet
