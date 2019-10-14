@@ -45,13 +45,13 @@ Luckily **Docker** can help us to solve these issue by handling environment setu
 
 ## Lesson Stages
 
-- [Installing Docker](/#Installing-Docker)
-- [Single Docker Container](/#Single-Docker-Container)
-- [Adding Docker Compose](/#Adding-Docker-Compose)
-- [Running Multiple Containers](/#Running-Multiple-Containers)
-    - [Database Container](/#Database-Container)
-    - [Server Container](/#Server-Container)
-    - [Client Container](/#Client-Container)
+- [Installing Docker](#Installing-Docker)
+- [Single Docker Container](#Single-Docker-Container)
+- [Adding Docker Compose](#Adding-Docker-Compose)
+- [Running Multiple Containers](#Running-Multiple-Containers)
+    - [Database Container](#Database-Container)
+    - [Server Container](#Server-Container)
+    - [Client Container](#Client-Container)
 
 
 ## Installing Docker
