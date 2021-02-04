@@ -1,5 +1,5 @@
 # Base image we are modifying from https://hub.docker.com/
-FROM node:12-alpine
+FROM node:14.15.4-alpine3.10
 
 # set working directory
 RUN mkdir -p /app
